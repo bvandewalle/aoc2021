@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"sort"
 	"strconv"
 )
 
@@ -47,25 +46,17 @@ func parts(input []string, part2 bool) {
 	basins := []int{}
 	for i, line := range mem {
 		for j, v := range line {
-			if i > 0 {
-				if mem[i-1][j] <= v {
-					continue
-				}
+			if i > 0 && mem[i-1][j] <= v {
+				continue
 			}
-			if i < len(mem)-1 {
-				if mem[i+1][j] <= v {
-					continue
-				}
+			if i < len(mem)-1 && mem[i+1][j] <= v {
+				continue
 			}
-			if j > 0 {
-				if mem[i][j-1] <= v {
-					continue
-				}
+			if j > 0 && mem[i][j-1] <= v {
+				continue
 			}
-			if j < len(mem[0])-1 {
-				if mem[i][j+1] <= v {
-					continue
-				}
+			if j < len(mem[0])-1 && mem[i][j+1] <= v {
+				continue
 			}
 			count += (v + 1)
 			visited := map[int]bool{}
@@ -75,8 +66,6 @@ func parts(input []string, part2 bool) {
 	if !part2 {
 		fmt.Println(count)
 	} else {
-		sort.Ints(basins)
-		fmt.Println(basins)
 		fmt.Println(basins[len(basins)-1] * basins[len(basins)-2] * basins[len(basins)-3])
 	}
 }
