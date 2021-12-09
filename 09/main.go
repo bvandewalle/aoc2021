@@ -82,34 +82,12 @@ func parts(input []string, part2 bool) {
 }
 
 func basinSizeRec(mem [][]int, x, y int, state map[int]bool) int {
+	if x < 0 || x > len(mem)-1 || y < 0 || y > len(mem[0])-1 || mem[x][y] == 9 {
+		return 0
+	}
 	if _, exists := state[x*len(mem[0])+y]; exists {
 		return 0
-	} else {
-		state[x*len(mem[0])+y] = true
 	}
-	if mem[x][y] == 9 {
-		return 0
-	}
-	extraCount := 1
-	if x > 0 {
-		if mem[x-1][y] >= mem[x][y] {
-			extraCount += basinSizeRec(mem, x-1, y, state)
-		}
-	}
-	if x < len(mem)-1 {
-		if mem[x+1][y] >= mem[x][y] {
-			extraCount += basinSizeRec(mem, x+1, y, state)
-		}
-	}
-	if y > 0 {
-		if mem[x][y-1] >= mem[x][y] {
-			extraCount += basinSizeRec(mem, x, y-1, state)
-		}
-	}
-	if y < len(mem[0])-1 {
-		if mem[x][y+1] >= mem[x][y] {
-			extraCount += basinSizeRec(mem, x, y+1, state)
-		}
-	}
-	return extraCount
+	state[x*len(mem[0])+y] = true
+	return 1 + basinSizeRec(mem, x-1, y, state) + basinSizeRec(mem, x+1, y, state) + basinSizeRec(mem, x, y-1, state) + basinSizeRec(mem, x, y+1, state)
 }
