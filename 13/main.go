@@ -67,14 +67,14 @@ func parts(input []string, part2 bool) {
 		for k, _ := range previousMap {
 			if f[0] == 0 {
 				if k.x > f[1] {
-					newK := point{x: f[1] - (k.x - f[1]), y: k.y}
+					newK := point{x: 2*f[1] - k.x, y: k.y}
 					nextMap[newK] = true
 				} else {
 					nextMap[k] = true
 				}
 			} else {
 				if k.y > f[1] {
-					newK := point{x: k.x, y: f[1] - (k.y - f[1])}
+					newK := point{x: k.x, y: 2*f[1] - k.y}
 					nextMap[newK] = true
 				} else {
 					nextMap[k] = true
